@@ -5,14 +5,16 @@ import java.util.ArrayList;
 
 public class Eat extends Rule
 {
-	public Eat(FoodType newEdible, float newMaxEaten)
+	public Eat(FoodType newEdible, float newMaxEatenOnce, float newMaxEaten)
 	{
 		this.edibles.add(newEdible);
+		this.maxEatenOnce = newMaxEatenOnce;
 		this.maxEaten = newMaxEaten;
 	}
-	public Eat(ArrayList<FoodType> newEdibles, float newMaxEaten)
+	public Eat(ArrayList<FoodType> newEdibles, float newMaxEatenOnce, float newMaxEaten)
 	{
 		this.edibles = newEdibles;
+		this.maxEatenOnce = newMaxEatenOnce;
 		this.maxEaten = newMaxEaten;
 	}
 	
@@ -22,7 +24,7 @@ public class Eat extends Rule
 			int amount = 0;
 			for(Pop other : this.getSimulation().getEnvironment())
 			{
-				if(edibles.contains(other.getFoodType()) & other.getName() != this.getPop().getName() & other.isAlive())
+				if(edibles.contains(other.getFoodType()) && other.getName() != this.getPop().getName() && other.isAlive())
 				{
 					amount++;
 				}
@@ -30,22 +32,32 @@ public class Eat extends Rule
 			return amount;
 		}
 		
-	public float maxEaten;
+	public float maxEatenOnce, maxEaten;
 	
 	@Override
-	public void behave() 
+	public boolean behave() 
 	{
-		while(this.getPop().getEaten() < this.maxEaten & getEdibleAmount() > 0)
+		float eatenOnce = 0;
+//		System.out.println("eatenOnce : " + eatenOnce + " | maxEatenOnce : " + this.maxEatenOnce);
+//		System.out.println(getEdibleAmount());
+		while(eatenOnce < this.maxEatenOnce && getEdibleAmount() > 0)
 		{
 			for(Pop other : this.getSimulation().getEnvironment())
 			{
-				if(edibles.contains(other.getFoodType()) & other.getName() != this.getPop().getName() & other.isAlive()) 
+				if(edibles.contains(other.getFoodType()) && other.getName() != this.getPop().getName() && other.isAlive()) 
 				{
+					//System.out.println(this.getPop().getEaten());
+					//System.out.println("miam");
 					this.getPop().eat(other.getFoodValue());
+					eatenOnce += other.getFoodValue();
+					//System.out.println(this.getPop().getEaten());
 					other.kill();
 				}
-				if(this.getPop().getEaten() >= this.maxEaten) break;
+				if(eatenOnce >= this.maxEatenOnce) break;
 			}
 		}
+		//System.out.println("eaten : " + this.getPop().getEaten() + " | maxEaten : " + this.maxEaten);
+		if(this.getPop().getEaten() >= this.maxEaten || getEdibleAmount() == 0.0) return true;
+		else return false;
 	}
 }

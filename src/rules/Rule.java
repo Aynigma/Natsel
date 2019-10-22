@@ -11,8 +11,11 @@ public abstract class Rule implements Cloneable
 	private Simulation simulation;
 		public Simulation getSimulation() {return this.simulation;}
 		public void setSimulation(Simulation parentSimulation) {this.simulation = parentSimulation;}
+		
+	private boolean done;
+		public boolean isDone() {return this.done;}
 
-	public abstract void behave();
+	public abstract boolean behave();
 	
 	@Override
 	protected Object clone() throws CloneNotSupportedException {

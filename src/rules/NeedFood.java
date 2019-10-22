@@ -11,20 +11,22 @@ public class NeedFood extends Rule
 		this.survivalRate = 0;
 	}
 	public NeedFood(float newNeed, float newSurvivalRate)
+	
 	{
 		this.need = newNeed;
-		this.survivalRate = newSurvivalRate;
+		this.survivalRate = newSurvivalRate; 
 	}
 	
 	@Override
-	public void behave() 
+	public boolean behave() 
 	{
 		if(getPop().getEaten() < this.need)
 		{
 			float trueSurvivalRate = (int) (getPop().getEaten()/need) * survivalRate;
 			int scenarium = (int) (Math.random() * 100);
-			if(scenarium > survivalRate) getPop().kill();
+			if(scenarium > trueSurvivalRate) getPop().kill();
 		}
+		return true;
 	}
-
 }
+

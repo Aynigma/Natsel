@@ -12,6 +12,8 @@ public class Pop
 		this.foodValue = newFoodValue;
 		this.eaten = 0;
 		this.alive = true;
+		this.done = false;
+		this.step = 0;
 	}
 	
 	
@@ -36,6 +38,19 @@ public class Pop
 	private float eaten;
 		public float getEaten() {return this.eaten;}
 		public void eat(float amount) {this.eaten += amount;}
+	
+	private int step;
+		public int getStep() {return this.step;}
+		
+	private boolean done;
+		public boolean isDone() {return this.done;}
+		private void Done() {this.done = true;}
+		public void Ready()
+		{
+			this.eaten = 0;
+			this.step = 0;
+			this.done = false;
+		}
 		
 	private ArrayList<Rule> rules = new ArrayList<Rule>();
 		public ArrayList<Rule> getRules() {return rules;}
@@ -55,9 +70,10 @@ public class Pop
 			rules.addAll(newRules);
 		}
 	
-	public void iterate()
+	public void iterateStep()
 	{
-		for (Rule rule : rules) rule.behave();
-		this.eaten = 0;
+		//System.out.println(name + " " + this + " " + isAlive() + " " + step);
+		if(rules.get(step).behave()) step++;
+		if(rules.size() <= step) Done();
 	}
 }

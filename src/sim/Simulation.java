@@ -30,7 +30,7 @@ public class Simulation
 			float amount = 0;
 			for(Pop pop : environment)
 			{
-				if(pop.isAlive() & pop.getFoodType() == foodType) amount += pop.getFoodValue();
+				if(pop.isAlive() && pop.getFoodType() == foodType) amount += pop.getFoodValue();
 			}
 			return amount;
 		}
@@ -39,6 +39,16 @@ public class Simulation
 			float amount = 0;
 			for(FoodType foodType : foodTypes) amount += getFoodAmount(foodType);
 			return amount;
+		}
+		
+		public int popToDo()
+		{
+			int todo = 0;
+			for(Pop pop : environment)
+			{
+				if(!pop.isDone() && pop.isAlive()) todo++;
+			}
+			return todo;
 		}
 		
 		public void printPop(String popName)
@@ -72,17 +82,22 @@ public class Simulation
 			iteration++;
 			ArrayList<Pop> deadPops = new ArrayList<Pop>();
 			Collections.shuffle(environment);
-			for(Pop pop : environment)
-			{
-//				System.out.println(pop + " " + pop.getEaten() + " " + pop.isAlive() + " " + pop.getName());
-				if(pop.isAlive()) pop.iterate();
-				//Second check in case pop died after iterate()
-				if(!pop.isAlive()) deadPops.add(pop);
+			while (popToDo() > 0)
+			{	
+				//System.out.println(popToDo());
+				for(Pop pop : environment)
+				{
+					//System.out.println(pop + " " + pop.getEaten() + " " + pop.isAlive() + " " + pop.getName());
+					if(pop.isAlive() && !pop.isDone()) pop.iterateStep();
+					//Second check in case pop died after iterate()
+					if(!pop.isAlive()) deadPops.add(pop);
+				}
 			}
-			for(Pop pop : deadPops) environment.remove(pop);
+			for(Pop deadPop : deadPops) environment.remove(deadPop);
 			deadPops = new ArrayList<Pop>();
 			for(Pop child : childPops) environment.add(child);
 			childPops = new ArrayList<Pop>();
+			for(Pop pop : environment) pop.Ready();
 			if(print) 
 			{
 				System.out.println("Iteration " + iteration + "\n");
@@ -92,6 +107,12 @@ public class Simulation
 		}
 		public void iterate(int amount, boolean print)
 		{
+			if(print) 
+			{
+				System.out.println("Iteration " + iteration + "\n");
+				printAllPops();
+				System.out.println();
+			}
 			for(int i = 0; i < amount; i++) iterate(print);
 		}
 }
