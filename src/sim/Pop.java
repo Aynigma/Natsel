@@ -4,9 +4,10 @@ import rules.*;
 
 public class Pop 
 {
-	public Pop(String newName, Simulation newSimulation, FoodType newFoodType, int newFoodValue)
+	public Pop(String newName, String newDescription, Simulation newSimulation, FoodType newFoodType, int newFoodValue)
 	{
 		this.name = newName;
+		this.description = newDescription;
 		this.simulation = newSimulation;
 		this.foodType = newFoodType;
 		this.foodValue = newFoodValue;
@@ -16,10 +17,29 @@ public class Pop
 		this.step = 0;
 	}
 	
+	public Pop(Pop pop) {
+		this.name = pop.name;
+		this.description = pop.description;
+		this.simulation = pop.simulation;
+		this.foodType = pop.foodType;
+		this.foodValue = pop.foodValue;
+		this.eaten = 0;
+		this.alive = true;
+		this.done = false;
+		this.step = 0;
+		this.rules = new ArrayList<Rule>();
+		for (int i = 0; i < pop.rules.size(); i++) {
+			this.rules.add(pop.rules.get(i));
+		}
+	}
+	
 	
 	
 	private String name;
 		public String getName() {return this.name;}
+		
+	private String description;
+		public String getDescription() {return this.description;}
 		
 	private Simulation simulation;
 		public Simulation getSimulation() {return this.simulation;}

@@ -2,12 +2,25 @@ package sim;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.AbstractMap.SimpleImmutableEntry;
+
+import gui.Window;
+import gui.controllers.SimulationController;
+import gui.models.SimulationPopulationRowModel;
+import gui.models.TurnDataRowModel;
+
 import java.util.Collections;
 
 public class Simulation
 {
-	public Simulation()
+	private String name;
+	private String description;
+	private SimulationController controller;
+	
+	public Simulation(String name, String description)
 	{
+		this.name = name;
+		this.description = description;
 		this.iteration = 0;
 	}
 	
@@ -51,6 +64,16 @@ public class Simulation
 			return todo;
 		}
 		
+		public int countPop(String popName)
+		{
+			int amount = 0;
+			for (Pop pop : environment)
+			{
+				if(pop.getName() == popName) amount += 1;
+			}
+			return amount;
+		}
+		
 		public void printPop(String popName)
 		{
 			int amount = 0;
@@ -74,6 +97,8 @@ public class Simulation
 			}
 			
 			for (HashMap.Entry<String, Integer> pair : population.entrySet()) System.out.println(pair.getKey() + " : " + pair.getValue());
+			
+			UpdateControllerTable();
 		}
 		
 	public int iteration;
@@ -104,6 +129,7 @@ public class Simulation
 				printAllPops();
 				System.out.println();
 			}
+
 		}
 		public void iterate(int amount, boolean print)
 		{
@@ -115,4 +141,32 @@ public class Simulation
 			}
 			for(int i = 0; i < amount; i++) iterate(print);
 		}
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+		public String getDescription() {
+			return description;
+		}
+		public void setDescription(String description) {
+			this.description = description;
+		}
+		public void setController(SimulationController controller) {
+			this.controller = controller;
+		}
+		
+		public void UpdateControllerTable() {
+
+			
+			ArrayList<SimulationPopulationRowModel> populations = Window.getInstance().getPopulations();
+			int[] populationsCounts = new int[populations.size()];
+			for (int i = 0; i < populationsCounts.length; i++) {
+				populationsCounts[i] = countPop(populations.get(i).getName());
+			}
+			
+			controller.addRow(new TurnDataRowModel(iteration, populationsCounts));
+		}
+		
 }
