@@ -19,6 +19,11 @@ public class Reproduce extends Rule
 		this.children = newChildren;
 	}
 	
+	public Reproduce(Reproduce reproduce){
+		this.eatenNeed = reproduce.eatenNeed;
+		this.children = reproduce.children;
+	}
+	
 	@Override
 	public boolean behave()
 	{

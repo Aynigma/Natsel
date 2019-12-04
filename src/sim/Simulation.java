@@ -159,14 +159,15 @@ public class Simulation
 		
 		public void UpdateControllerTable() {
 
-			
-			ArrayList<SimulationPopulationRowModel> populations = Window.getInstance().getPopulations();
-			int[] populationsCounts = new int[populations.size()];
-			for (int i = 0; i < populationsCounts.length; i++) {
-				populationsCounts[i] = countPop(populations.get(i).getName());
+			if(controller != null){
+				ArrayList<SimulationPopulationRowModel> populations = Window.getInstance().getPopulations();
+				int[] populationsCounts = new int[populations.size()];
+				for (int i = 0; i < populationsCounts.length; i++) {
+					populationsCounts[i] = countPop(populations.get(i).getName());
+				}
+				
+				controller.addRow(new TurnDataRowModel(iteration, populationsCounts));
 			}
-			
-			controller.addRow(new TurnDataRowModel(iteration, populationsCounts));
 		}
 		
 }

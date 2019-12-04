@@ -28,9 +28,6 @@ public class Pop
 		this.done = false;
 		this.step = 0;
 		this.rules = new ArrayList<Rule>();
-		for (int i = 0; i < pop.rules.size(); i++) {
-			this.rules.add(pop.rules.get(i));
-		}
 	}
 	
 	

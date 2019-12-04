@@ -18,6 +18,13 @@ public class Eat extends Rule
 		this.maxEaten = newMaxEaten;
 	}
 	
+	
+	public Eat(Eat eat){
+		this.edibles = eat.edibles;
+		this.maxEatenOnce = eat.maxEatenOnce;
+		this.maxEaten = eat.maxEaten;
+	}
+	
 	public ArrayList<FoodType> edibles = new ArrayList<FoodType>();
 		public float getEdibleAmount()
 		{

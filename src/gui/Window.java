@@ -39,6 +39,7 @@ public class Window extends Application{
 	public void setController(Controller controller) {
 		this.controller = controller;
 	}
+	
 	public Controller getController() {
 		return this.controller;
 	}

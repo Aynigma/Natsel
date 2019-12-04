@@ -19,6 +19,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.IntegerStringConverter;
+import rules.Rule;
+import rules.Eat;
+import rules.NeedFood;
+import rules.Reproduce;
+import sim.FoodType;
 import sim.Pop;
 import sim.Simulation;
 
@@ -106,7 +111,24 @@ public class SimulationCreationController extends Controller {
 				
 				for (SimulationPopulationRowModel simulationPopulationRowModel : Window.getInstance().getPopulations()) {
 					for (int i = 0; i < simulationPopulationRowModel.getQuantity(); i++) {
-						simulation.addPop(new Pop(simulationPopulationRowModel.getPopulation()));
+						
+						Pop populationModel = simulationPopulationRowModel.getPopulation();
+						
+						Pop population = new Pop(populationModel.getName(), populationModel.getDescription(), populationModel.getSimulation(), populationModel.getFoodType(), 1);
+						for (Rule rule : populationModel.getRules()) {
+							if(rule instanceof Eat){
+								population.addRule(new Eat((Eat)rule));
+							}
+							if(rule instanceof NeedFood){
+								population.addRule(new NeedFood((NeedFood)rule));
+							}
+							if(rule instanceof Reproduce){
+								population.addRule(new Reproduce((Reproduce)rule));
+							}
+						}
+
+						simulation.addPop(population);
+						
 					}
 				}
 				

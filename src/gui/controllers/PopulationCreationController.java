@@ -194,7 +194,7 @@ public class PopulationCreationController extends Controller {
 		}));
 		
 		crea_pop_rule_needFood_survivalRate.setText("0.0");
-		crea_pop_rule_needFood_survivalRate.setTooltip(new Tooltip("1.0 = 100%; 0.0 = 0%"));
+		crea_pop_rule_needFood_survivalRate.setTooltip(new Tooltip("100.0 = 100%; 0.0 = 0%"));
 		crea_pop_rule_needFood_survivalRate.setTextFormatter(new TextFormatter<>(change -> {
 			String text = change.getText();
 			return (text.matches("(([1-9][0-9]*)|0)?(\\.[0-9]*)?")) ? change : null;
