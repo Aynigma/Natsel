@@ -17,6 +17,11 @@ public class NeedFood extends Rule
 		this.survivalRate = newSurvivalRate; 
 	}
 	
+	public NeedFood(NeedFood needFood){
+		this.need = needFood.need;
+		this.survivalRate = needFood.survivalRate;
+	}
+	
 	@Override
 	public boolean behave() 
 	{
