@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Collections;
 
+/**
+ * Object representing a given environment to simulate. Contains collections of Pops and calls their interactions through "iterations".
+ * @author Thomas_Florent
+ * @see {@link #iterate(boolean)}
+ * @see {@link sim.Pop}
+ */
 public class Simulation
 {
 	public Simulation()
@@ -11,9 +17,17 @@ public class Simulation
 		this.iteration = 0;
 	}
 	
+	/**
+	 * Pops that were spawned during the iteration. 
+	 * They are considered "children", and thus separated the environment until the next iteration.
+	 */
 	private ArrayList<Pop> childPops = new ArrayList<Pop>();
 		public void addChild(Pop newChild) {this.childPops.add(newChild);}
 		
+	/**
+	 * ArrayList containing the Pops currently present in the simulation.
+	 * @see {@link sim.Pop}
+	 */
 	private ArrayList<Pop> environment = new ArrayList<Pop>();
 		public ArrayList<Pop> getEnvironment() {return this.environment;}
 		public void addPop(Pop pop) {this.environment.add(pop);}
@@ -25,6 +39,13 @@ public class Simulation
 //			}
 //		}
 //		
+		/**
+		 * @param foodType The {@link FoodType} to look for.
+		 * @return The amount of Pops with the given FoodType present in the environment.
+		 * Used to prevent infinite loops where a Pop would endlessly look for food that isn't there.
+		 * @see {@link sim.FoodType}
+	+	 * @see {@link rules.Eat}
+		 */
 		public float getFoodAmount(FoodType foodType)
 		{
 			float amount = 0;
@@ -34,6 +55,14 @@ public class Simulation
 			}
 			return amount;
 		}
+		
+		/**
+		 * Overloads {@link #getFoodAmount(FoodType)}, but with an ArrayList of FoodTypes instead.
+		 * @param foodTypes ArrayList containing the {@link FoodType}s to look for. 
+		 * @see {@link #getFoodAmount(FoodType)}
+		 * @see {@link FoodType}
+		 * @see {@link rules.Eat}
+		 */
 		public float getFoodAmount(ArrayList<FoodType> foodTypes)
 		{
 			float amount = 0;
@@ -41,6 +70,12 @@ public class Simulation
 			return amount;
 		}
 		
+		/**
+		 * Iterate through the environment and count the number of active and alive Pops.
+		 * @return The number of active and alive Pops in the environment.
+		 * @see {@link Pop#isAlive()}
+		 * @see {@link Pop#isDone()}
+		 */
 		public int popToDo()
 		{
 			int todo = 0;
@@ -50,7 +85,11 @@ public class Simulation
 			}
 			return todo;
 		}
-		
+		/**
+		 * Iterate through the environment and print the number of instances of a given Pop.
+		 * @param popName Name of the Pop that we want to count the instances of.
+		 * @see {@link #printAllPops()}
+		 */
 		public void printPop(String popName)
 		{
 			int amount = 0;
@@ -61,6 +100,10 @@ public class Simulation
 			System.out.println(popName + " : " + amount);
 		}
 		
+		/**
+		 * Print the number of instances of all the Pops present in the environment.
+		 * @see {@link #printPop(String)}
+		 */
 		public void printAllPops()
 		{
 			HashMap<String, Integer> population = new HashMap<String, Integer>();
@@ -77,6 +120,14 @@ public class Simulation
 		}
 		
 	public int iteration;
+		/**
+		 * Iterate the simulation a single time. 
+		 * The environment will be shuffled, then the algorithm will go through each Pop, 
+		 * check if they are alive and active, then call a {@link Pop#iterateStep()}.
+		 * It will continue until all pops in the environment are either inactive (done == true) or dead.
+		 * @param print Whether or not to print the results.
+		 * @see {@link Pop#iterateStep()}
+		 */
 		public void iterate(boolean print)
 		{
 			iteration++;
@@ -105,6 +156,13 @@ public class Simulation
 				System.out.println();
 			}
 		}
+		
+		/**
+		 * Iterate the simulation multiple times.
+		 * @param amount How many times to iterate.
+		 * @param print Whether or not to print the results.
+		 * @see {@link #iterate(boolean)}
+		 */
 		public void iterate(int amount, boolean print)
 		{
 			if(print) 
