@@ -67,4 +67,13 @@ public class Eat extends Rule
 		if(this.getPop().getEaten() >= this.maxEaten || getEdibleAmount() == 0.0) return true;
 		else return false;
 	}
+	public ArrayList<FoodType> getEdibles() {
+		return edibles;
+	}
+	public float getMaxEatenOnce() {
+		return maxEatenOnce;
+	}
+	public float getMaxEaten() {
+		return maxEaten;
+	}
 }

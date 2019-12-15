@@ -1,9 +1,6 @@
 package gui;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-
-
 import gui.controllers.Controller;
 import gui.models.SimulationPopulationRowModel;
 import javafx.application.Application;
@@ -15,17 +12,24 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import sim.Simulation;
 
-// xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+ 
+// fxml version attributes : xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
 
-
+/**
+ * This class is responsible of handling the window of the application
+ * and therefore should be the entry point of the application.
+ * <br/>This class also contains all needed references of simulation elements.
+ * @author Aynigma
+ * @see gui
+ */
 public class Window extends Application{
 	
 	private static Window instance = null;
-	public static final String SCENE_PATH_SIMULATION = "fxml/Simulation.fxml";
+	public static final String SCENE_PATH_SIMULATION        = "fxml/Simulation.fxml";
 	public static final String SCENE_PATH_CREATE_POPULATION = "fxml/CreatePopulation.fxml";
 	public static final String SCENE_PATH_CREATE_SIMULATION = "fxml/CreateSimulation.fxml";
 	
-	private final String initialScene = SCENE_PATH_CREATE_SIMULATION;
+	private static final String initialScene = SCENE_PATH_CREATE_SIMULATION;
 	
 	private Stage stage = null;
 	private Controller controller = null;
@@ -50,14 +54,12 @@ public class Window extends Application{
 		return this.populations;
 	}
 	
-	
 	public Window() {
 		if(instance == null) {
 			instance = this;
 		}
-		this.simulation  = new Simulation("Untitled Simulation","No description available...");
+		this.simulation  = new Simulation("Untitled Simulation", "No description available...");
 		this.populations = new ArrayList<SimulationPopulationRowModel>();
-		//this.populations.add(new SimulationPopulationRowModel(10, new Pop("name", "description", simulation, null, 0)));
 	}
 	
 	public static void main(String[] args) {
@@ -71,21 +73,17 @@ public class Window extends Application{
 		System.out.println("Initialising Window...");
 		stage.setTitle("NatSel");
 
-        
         //end program on exit
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent e) {
-               Platform.exit();
-               System.exit(0);
+               quitApp();
             }
          });
 	
         changeScene(getSceneFromFXML(initialScene)); 
         stage.show();
-        System.out.println("Window Initialised");
-		
-		
+        System.out.println("Window Initialised\n");
 	}
 	
 	public static Scene getSceneFromFXML(String path) {
@@ -96,20 +94,34 @@ public class Window extends Application{
 			return  (Scene) loader.load();
 		}catch(Exception e) {
 			System.out.println("!-Failed to load Scene\n"+e);
-			System.out.println(Arrays.toString(e.getStackTrace()));
+			e.printStackTrace();
 			return null;
 		}
-		
 	}
 	
 	public void changeScene(Scene scene) {
 		if(scene != null) {
 			stage.setScene(scene);
-			System.out.println("\n---Scene changed");
+			System.out.println("--- Scene changed\n");
 		}else {
 			System.out.println("!-Can't change to a null Scene");
 		}
 		
+	}
+	
+	public void quitApp() {
+		System.out.println("/_\\ Exiting NatSel");
+		Platform.exit();
+        System.exit(0);
+	}
+	
+	public void resetSimulation() {
+		this.simulation = new Simulation("Untitled Simulation", "No description available...");
+		this.populations = new ArrayList<SimulationPopulationRowModel>();
+	}
+
+	public Stage getStage() {
+		return stage;
 	}
 	
 }

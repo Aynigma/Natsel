@@ -2,6 +2,10 @@ package gui.models;
 
 import sim.Pop;
 
+/**
+ * This model Class is meant to represent population data during their creation.
+ * @author Aynigma
+ */
 public class SimulationPopulationRowModel {
 	
 	private int quantity;
