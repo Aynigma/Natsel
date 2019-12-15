@@ -29,6 +29,7 @@ import sim.Pop;
  * @author Aynigma
  * @see Controller Controller
  */
+
 public class PopulationCreationController extends Controller {
 
     @FXML
@@ -146,7 +147,6 @@ public class PopulationCreationController extends Controller {
 		crea_pop_rule_needFood_active .setSelected(true);
 		crea_pop_rule_reproduce_active.setSelected(true);
 		
-		
 		crea_pop_name.setText("Unnamed population");
 		crea_pop_desc.setText("No description yet");
 		crea_pop_quantity.setText("1");
@@ -186,8 +186,7 @@ public class PopulationCreationController extends Controller {
 			String text = change.getText();
 		    return (text.matches("[0-9]*")) ? change : null;
 		}));
-		
-		
+	
 		crea_pop_button_cancel.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -282,7 +281,7 @@ public class PopulationCreationController extends Controller {
 				}else {
 					simulationPopulationRowModels.add(new SimulationPopulationRowModel(quantity, population));
 				}
-				
+			
 				Window.getInstance().changeScene(Window.getSceneFromFXML(Window.SCENE_PATH_CREATE_SIMULATION));
 			}
 		});

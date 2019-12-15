@@ -124,6 +124,7 @@ public class SimulationCreationController extends Controller {
 						simulation.addPop(population);
 					}
 				}
+
 				Window.getInstance().changeScene(Window.getSceneFromFXML(Window.SCENE_PATH_SIMULATION));
 			}
 		});
@@ -134,7 +135,7 @@ public class SimulationCreationController extends Controller {
 				//save textfields values
 				Window.getInstance().getSimulation().setName       (crea_sim_name.getText());
 				Window.getInstance().getSimulation().setDescription(crea_sim_desc.getText());
-				
+        
 				Window.getInstance().changeScene(Window.getSceneFromFXML(Window.SCENE_PATH_CREATE_POPULATION));
 			}
 		});
@@ -169,6 +170,5 @@ public class SimulationCreationController extends Controller {
 			}
 		});
 		
-
 	}
 }

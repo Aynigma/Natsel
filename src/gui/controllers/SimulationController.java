@@ -19,9 +19,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
-
 import javafx.scene.control.cell.PropertyValueFactory;
 import sim.Simulation;
+
 /**
  * This class handle the Simulation Scene and inherit from the Controller class
  * @author Aynigma
