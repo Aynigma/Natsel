@@ -28,6 +28,7 @@
                   <Menu mnemonicParsing="false" text="File">
                      <items>
                         <MenuItem fx:id="menu_new" mnemonicParsing="false" text="New Simulation" />
+                        <MenuItem fx:id="menu_export_csv" mnemonicParsing="false" text="Export as CSV" />
                         <MenuItem fx:id="menu_quit" mnemonicParsing="false" text="Quit" />
                      </items>
                   </Menu>

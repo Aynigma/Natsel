@@ -10,7 +10,6 @@ public class TurnDataRowModel {
 
 	private int turn;
 
-
 	private int[] populationQuantities;
 	
 	public int getTurn() {
@@ -26,7 +25,8 @@ public class TurnDataRowModel {
 		this.populationQuantities = populationQuantities;
 	}
 	
-	public String toString() {
+	public String toString() 
+	{
 		return "turn : "+turn+", quantities : "+Arrays.toString(populationQuantities);
 	}
 
