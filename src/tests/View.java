@@ -1,4 +1,4 @@
-package test;
+package tests;
 
 import sql.Population;
 import sql.PopulationRules;
