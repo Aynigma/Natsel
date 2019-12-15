@@ -37,3 +37,4 @@ public class TestSimulation
 		simulation.iterate(10, true);
 	}
 }
+

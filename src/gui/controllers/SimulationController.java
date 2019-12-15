@@ -19,24 +19,24 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
-
 import javafx.scene.control.cell.PropertyValueFactory;
 import sim.Simulation;
 
+/**
+ * This class handle the Simulation Scene and inherit from the Controller class
+ * @author Aynigma
+ * @see Controller Controller
+ */
 public class SimulationController extends Controller {
 
     @FXML
     private TableView<TurnDataRowModel> turn_table_view;
-
     @FXML
     private TableColumn<TurnDataRowModel, Integer> turn_table_col_turn;
-
     @FXML
     private Label turn_label;
-
     @FXML
     private TextField turn_textField;
-
     @FXML
     private Button turn_doTurn_button;
 	
@@ -44,6 +44,10 @@ public class SimulationController extends Controller {
     
     private ObservableList<TurnDataRowModel> observableList;
     
+    /**
+     * This method allows to add a row in the table about populations quantities per turn.
+     * @param row
+     */
     public void addRow(TurnDataRowModel row) {
     	observableList.add(row);
     	turn_table_view.setItems(observableList);
@@ -55,9 +59,13 @@ public class SimulationController extends Controller {
 		simulation.setController(this);
 	}
 	
-	
+	/**
+	 * This method initialize all javafx components of the scene.
+	 * <br/><b>And is automatically called on scene load</b>
+	 */
 	@Override
     public void initialize(URL location, ResourceBundle resources) {
+		super.initialize(location, resources);
 		
 		turn_table_col_turn.setCellValueFactory(new PropertyValueFactory<>("turn"));
 	

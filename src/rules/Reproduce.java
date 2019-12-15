@@ -44,5 +44,12 @@ public class Reproduce extends Rule
 		}
 		return true;
 	}
+	public float getEatenNeed() {
+		return eatenNeed;
+	}
+	public int getChildren() {
+		return children;
+	}
 	
 }
+

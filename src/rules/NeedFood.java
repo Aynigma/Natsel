@@ -5,6 +5,7 @@ public class NeedFood extends Rule
 {
 	private float need, survivalRate;
 	
+	
 	public NeedFood(float newNeed)
 	{
 		this.need = newNeed;
@@ -33,5 +34,12 @@ public class NeedFood extends Rule
 		}
 		return true;
 	}
+	public float getNeed() {
+		return need;
+	}
+	public float getSurvivalRate() {
+		return survivalRate;
+	}
 }
+
 

@@ -23,57 +23,55 @@ import rules.Rule;
 import rules.Eat;
 import rules.NeedFood;
 import rules.Reproduce;
-import sim.FoodType;
 import sim.Pop;
 import sim.Simulation;
 
+/**
+ * This class inherit the Controller class and is meant to manage creation of simulations
+ * @author Aynigma
+ * @see Controller Controller
+ */
 public class SimulationCreationController extends Controller {
 
     @FXML
     private Button    crea_sim_button_cancel;
-
     @FXML
     private Button    crea_sim_button_create;
-
     @FXML
     private TextField crea_sim_name;
-
     @FXML
     private TextArea  crea_sim_desc;
-
     @FXML
     private Button    crea_sim_button_pop_add;
-
+    @FXML 
+    private Button    crea_sim_button_pop_edit;
     @FXML
     private Button    crea_sim_button_pop_delete;
-
     @FXML
     private TableView  <SimulationPopulationRowModel         > crea_sim_table_view_pop;
-    
     @FXML
     private TableColumn<SimulationPopulationRowModel, Integer> crea_sim_table_column_pop_quantity;
-
     @FXML
     private TableColumn<SimulationPopulationRowModel, String > crea_sim_table_column_pop_name;
-
     @FXML
     private TableColumn<SimulationPopulationRowModel, String > crea_sim_table_column_pop_desc;
     
-	
+	/**
+	 * This method initialize all javafx components of the scene.
+	 * <br/><b>And is automatically called on scene load</b>
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
-
+		super.initialize(location, resources);
+		
 		crea_sim_table_column_pop_quantity.setEditable(true);
 		crea_sim_table_column_pop_quantity.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<SimulationPopulationRowModel,Integer>>(){
 
-			@Override
-			public void handle(CellEditEvent<SimulationPopulationRowModel, Integer> event) {
-				// TODO Auto-generated method stub
-				event.getRowValue().setQuantity(event.getNewValue());
-			}
-			
-		});
+		@Override
+		public void handle(CellEditEvent<SimulationPopulationRowModel, Integer> event) {
+			event.getRowValue().setQuantity(event.getNewValue());
+		}});
+		
 		crea_sim_table_column_pop_quantity.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 		crea_sim_table_column_pop_quantity.setCellValueFactory(new PropertyValueFactory<>("quantity"   ));
 		crea_sim_table_column_pop_name    .setCellValueFactory(new PropertyValueFactory<>("name"       ));
@@ -87,11 +85,8 @@ public class SimulationCreationController extends Controller {
 		crea_sim_table_view_pop.setItems(observableList);
 		crea_sim_table_view_pop.setEditable(true);
 		
-	
 		crea_sim_name.setText(Window.getInstance().getSimulation().getName());
 		crea_sim_desc.setText(Window.getInstance().getSimulation().getDescription());
-		
-		
 		
 		crea_sim_button_cancel.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -103,7 +98,6 @@ public class SimulationCreationController extends Controller {
 		crea_sim_button_create.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				
 				Simulation simulation = Window.getInstance().getSimulation();
 				simulation.setName       ((crea_sim_name.getText() != "") ? crea_sim_name.getText() : "Untitled Simulation");
@@ -128,10 +122,9 @@ public class SimulationCreationController extends Controller {
 						}
 
 						simulation.addPop(population);
-						
 					}
 				}
-				
+
 				Window.getInstance().changeScene(Window.getSceneFromFXML(Window.SCENE_PATH_SIMULATION));
 			}
 		});
@@ -139,7 +132,27 @@ public class SimulationCreationController extends Controller {
 		crea_sim_button_pop_add.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				//save textfields values
+				Window.getInstance().getSimulation().setName       (crea_sim_name.getText());
+				Window.getInstance().getSimulation().setDescription(crea_sim_desc.getText());
+        
 				Window.getInstance().changeScene(Window.getSceneFromFXML(Window.SCENE_PATH_CREATE_POPULATION));
+			}
+		});
+		
+		crea_sim_button_pop_edit.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+				SimulationPopulationRowModel selectedRow = crea_sim_table_view_pop.getSelectionModel().getSelectedItem();
+				int populationIndex = Window.getInstance().getPopulations().indexOf(selectedRow);
+				if(populationIndex >= 0) {
+					SimulationPopulationRowModel selectedPopulation = Window.getInstance().getPopulations().get(populationIndex);
+					
+					Window.getInstance().changeScene(Window.getSceneFromFXML(Window.SCENE_PATH_CREATE_POPULATION));
+					PopulationCreationController populationCreationController = (PopulationCreationController)Window.getInstance().getController();
+					populationCreationController.load(selectedPopulation);
+				}
 			}
 		});
 		
@@ -157,7 +170,5 @@ public class SimulationCreationController extends Controller {
 			}
 		});
 		
-
 	}
-
 }
