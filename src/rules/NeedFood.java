@@ -5,6 +5,7 @@ public class NeedFood extends Rule
 {
 	private float need, survivalRate;
 	
+	
 	public NeedFood(float newNeed)
 	{
 		this.need = newNeed;
@@ -17,6 +18,11 @@ public class NeedFood extends Rule
 		this.survivalRate = newSurvivalRate; 
 	}
 	
+	public NeedFood(NeedFood needFood){
+		this.need = needFood.need;
+		this.survivalRate = needFood.survivalRate;
+	}
+	
 	@Override
 	public boolean behave() 
 	{
@@ -27,6 +33,12 @@ public class NeedFood extends Rule
 			if(scenarium > trueSurvivalRate) getPop().kill();
 		}
 		return true;
+	}
+	public float getNeed() {
+		return need;
+	}
+	public float getSurvivalRate() {
+		return survivalRate;
 	}
 }
 

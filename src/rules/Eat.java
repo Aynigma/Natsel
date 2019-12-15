@@ -18,6 +18,13 @@ public class Eat extends Rule
 		this.maxEaten = newMaxEaten;
 	}
 	
+	
+	public Eat(Eat eat){
+		this.edibles = eat.edibles;
+		this.maxEatenOnce = eat.maxEatenOnce;
+		this.maxEaten = eat.maxEaten;
+	}
+	
 	public ArrayList<FoodType> edibles = new ArrayList<FoodType>();
 		public float getEdibleAmount()
 		{
@@ -59,5 +66,14 @@ public class Eat extends Rule
 		//System.out.println("eaten : " + this.getPop().getEaten() + " | maxEaten : " + this.maxEaten);
 		if(this.getPop().getEaten() >= this.maxEaten || getEdibleAmount() == 0.0) return true;
 		else return false;
+	}
+	public ArrayList<FoodType> getEdibles() {
+		return edibles;
+	}
+	public float getMaxEatenOnce() {
+		return maxEatenOnce;
+	}
+	public float getMaxEaten() {
+		return maxEaten;
 	}
 }
