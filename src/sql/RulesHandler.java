@@ -8,7 +8,7 @@ import java.util.ArrayList;
  *
  * @author Baptiste
  */
-public class Rules {
+public class RulesHandler {
 
 	private int rulesId;
 	private String name;

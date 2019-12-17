@@ -104,7 +104,7 @@ public class PopulationRules {
 	 * @param name
 	 */
 	public void viewPopulationRules(String name) {
-		Population p = new Population();
+		PopHandler p = new PopHandler();
 		int populationId = p.viewPopulationId(name);
 		setPopulationId(populationId);
 		viewPopulationRules();
@@ -118,10 +118,10 @@ public class PopulationRules {
 	 * @param nom
 	 */
 	public void uploadLinkPopulationRule(String population, String rules) {
-		Population p = new Population();
+		PopHandler p = new PopHandler();
 		int populationId = p.viewPopulationId(population);
 		setPopulationId(populationId);
-		Rules r = new Rules();
+		RulesHandler r = new RulesHandler();
 		int RulesId = r.viewRulesId(rules);
 		setRuleId(RulesId);
 		setLinkPopulationRules();

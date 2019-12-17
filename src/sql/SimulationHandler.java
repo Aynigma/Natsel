@@ -8,9 +8,9 @@ import java.sql.*;
  * @author Baptiste
  */
 
-public class Simulation {
+public class SimulationHandler {
 	private int simulationId;
-	private String nameSimulation;
+	private String simulationName;
 	private String description;
 
 	/**
@@ -30,15 +30,15 @@ public class Simulation {
 	/**
 	 * @return the nomsim : String
 	 */
-	public String getNameSimulation() {
-		return nameSimulation;
+	public String getSimulationName() {
+		return simulationName;
 	}
 
 	/**
-	 * @param nameSimulation : String the nomsim to set
+	 * @param simulationName : String the nomsim to set
 	 */
-	public void setNameSimulation(String nameSimulation) {
-		this.nameSimulation = nameSimulation;
+	public void setSimulationName(String simulationName) {
+		this.simulationName = simulationName;
 	}
 
 	/**
@@ -70,15 +70,15 @@ public class Simulation {
 			ResultSet rs = st.executeQuery(
 					"SELECT name, description FROM `simulation` where idSimulation='" + getSimulationId() + "'");
 			while (rs.next()) {
-				setNameSimulation(rs.getString(1));
+				setSimulationName(rs.getString(1));
 				setDescription(rs.getString(2));
 			}
 		} catch (SQLException e) {
 			System.out.println(e);
 		}
-		System.out.println(getNameSimulation() + " " + getDescription());
+		System.out.println(getSimulationName() + " " + getDescription());
 
-		return getNameSimulation() + getDescription();
+		return getSimulationName() + getDescription();
 
 	}
 
@@ -94,7 +94,7 @@ public class Simulation {
 					"jdbc:mysql://localhost/algo?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
 					"root", "root");
 			Statement st = cn.createStatement();
-			ResultSet rs = st.executeQuery("SELECT idSimulation FROM `simulation` where name='" + getNameSimulation() + "'");
+			ResultSet rs = st.executeQuery("SELECT idSimulation FROM `simulation` where name='" + getSimulationName() + "'");
 			while (rs.next()) {
 				setSimulationId(rs.getInt(1));
 			}
@@ -117,7 +117,7 @@ public class Simulation {
 					"jdbc:mysql://localhost/algo?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
 					"root", "root");
 			Statement st = cn.createStatement();
-			st.executeUpdate("INSERT INTO `simulation`(`name`, `description`) VALUES ('" + getNameSimulation() + "','"
+			st.executeUpdate("INSERT INTO `simulation`(`name`, `description`) VALUES ('" + getSimulationName() + "','"
 					+ getDescription() + "')");
 		} catch (SQLException e) {
 			System.out.println(e);
@@ -134,7 +134,7 @@ public class Simulation {
 	 */
 
 	public void uploadSimulation(String simulationName, String desccription) {
-		setNameSimulation(simulationName);
+		setSimulationName(simulationName);
 		setDescription(desccription);
 		setSimulation();
 	}
@@ -159,7 +159,7 @@ public class Simulation {
 	 */
 
 	public int viewSimulationId(String name) {
-		setNameSimulation(name);
+		setSimulationName(name);
 		return viewSimulationId();
 	}
 

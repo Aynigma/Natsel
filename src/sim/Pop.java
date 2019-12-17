@@ -15,6 +15,9 @@ public class Pop
 		this.alive = true;
 		this.done = false;
 		this.step = 0;
+		
+		sql.PopHandler popEntry = new sql.PopHandler();
+		popEntry.uploadPopulation(this.name, this.description);
 	}
 	
 	public Pop(Pop pop) {

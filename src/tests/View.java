@@ -1,10 +1,10 @@
 package tests;
 
-import sql.Population;
+import sql.PopHandler;
 import sql.PopulationRules;
-import sql.Rules;
-import sql.Simulation;
-import sql.Turns;
+import sql.RulesHandler;
+import sql.SimulationHandler;
+import sql.TurnsHandler;
 
 public class View {
 
@@ -23,12 +23,12 @@ public class View {
 	}
 
 	public void viewPopulation(int i) {
-		Population p = new Population();
+		PopHandler p = new PopHandler();
 		p.viewPopulation(i);
 	}
 
 	public void viewRule(int i) {
-		Rules r = new Rules();
+		RulesHandler r = new RulesHandler();
 		r.viewRules(i);
 
 	}
@@ -40,17 +40,17 @@ public class View {
 	}
 
 	public void viewSimulation(int i) {
-		Simulation s = new Simulation();
+		SimulationHandler s = new SimulationHandler();
 		s.viewSimulation(i);
 	}
 
 	public void viewSimulationId(String i) {
-		Simulation s = new Simulation();
+		SimulationHandler s = new SimulationHandler();
 		System.out.println(s.viewSimulationId(i));
 	}
 	
 	public void viewPopulationSimulation(String i) {
-		Turns t = new Turns();
+		TurnsHandler t = new TurnsHandler();
 		t.viewPopulationSimulation(i);
 	}
 }

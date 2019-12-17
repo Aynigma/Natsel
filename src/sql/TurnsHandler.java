@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class Turns {
+public class TurnsHandler {
 
 	private int turn;
 	private int populationNumber;
@@ -241,9 +241,9 @@ public class Turns {
 	public void uploadPopulationTurn(int simulationTurn, String population, int populationNumber, String simulation) {
 
 		setPopulationNumber(populationNumber);
-		Simulation s = new Simulation();
+		SimulationHandler s = new SimulationHandler();
 		int SimulationId = s.viewSimulationId(simulation);
-		Population p = new Population();
+		PopHandler p = new PopHandler();
 		int populationId = p.viewPopulationId(population);
 		setpopulationId(populationId);
 		setTurn(simulationTurn);
@@ -262,7 +262,7 @@ public class Turns {
 
 	public void viewPopulationSimulation(String simulation) {
 
-		Simulation s = new Simulation();
+		SimulationHandler s = new SimulationHandler();
 		int simulationId = s.viewSimulationId(simulation);
 		setSimulationId(simulationId);
 		getNumberTurnPopulation();

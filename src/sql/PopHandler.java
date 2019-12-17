@@ -7,25 +7,23 @@ import java.sql.*;
  *
  * @author Baptiste
  */
-public class Population {
+public class PopHandler {
 
-	private int populationId;
+	private int popId;
 	private String name;
 	private String description;
 
-	/**
+	/** ;
 	 * @return the id_pop : int
 	 */
-	public int getPopulationId() {
-		return populationId;
+	public int getPopId() {
+		return popId;
 	}
 
 	/**
 	 * @return the nom : String
 	 */
-	public String getName() {
-		return name;
-	}
+	public String getName() {return name;}
 
 	/**
 	 * @param name : String the nom to set
@@ -49,10 +47,10 @@ public class Population {
 	}
 
 	/**
-	 * @param populationId : int the id_pop to set
+	 * @param popId : int the id_pop to set
 	 */
-	public void setPopulationId(int populationId) {
-		this.populationId = populationId;
+	public void setPopId(int popId) {
+		this.popId = popId;
 	}
 
 	/**
@@ -68,7 +66,7 @@ public class Population {
 					"root", "root");
 			Statement st = cn.createStatement();
 			ResultSet rs = st.executeQuery(
-					"SELECT name, description FROM `population` where idPopulation='" + getPopulationId() + "'");
+					"SELECT name, description FROM `population` where idPopulation='" + getPopId() + "'");
 			while (rs.next()) {
 				setName(rs.getString(1));
 				setDescription(rs.getString(2));
@@ -94,13 +92,13 @@ public class Population {
 			Statement st = cn.createStatement();
 			ResultSet rs = st.executeQuery("SELECT idPopulation FROM `population` where name='" + getName() + "'");
 			while (rs.next()) {
-				setPopulationId(rs.getInt(1));
+				setPopId(rs.getInt(1));
 			}
 		} catch (SQLException e) {
 			System.out.println(e);
 		}
 
-		return getPopulationId();
+		return getPopId();
 	}
 
 	/**
@@ -143,7 +141,7 @@ public class Population {
 	 * @param Int id
 	 */
 	public void viewPopulation(int populationId) {
-		setPopulationId(populationId);
+		setPopId(populationId);
 		viewPopulation();
 
 	}

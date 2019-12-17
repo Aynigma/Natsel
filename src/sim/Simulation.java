@@ -19,15 +19,21 @@ import java.util.Collections;
  */
 public class Simulation
 {
-	private String name;
+	private String name;		
+		public String getName() {return name;}
+		public void setName(String name) {this.name = name;}
 	private String description;
+		public String getDescription() {return description;}
+		public void setDescription(String description) {this.description = description;}
 	private SimulationController controller;
+		public void setController(SimulationController controller) {this.controller = controller;}
 	
 	public Simulation(String name, String description)
 	{
 		this.name = name;
 		this.description = description;
 		this.iteration = 0;
+		
 	}
 	
 	/**
@@ -194,7 +200,7 @@ public class Simulation
 		 */
 		public void iterate(int amount, boolean print)
 		{
-			if(print) 
+			if(print && iteration == 0) 
 			{
 				System.out.println("Iteration " + iteration + "\n");
 				printAllPops();
@@ -202,21 +208,7 @@ public class Simulation
 			}
 			for(int i = 0; i < amount; i++) iterate(print);
 		}
-		public String getName() {
-			return name;
-		}
-		public void setName(String name) {
-			this.name = name;
-		}
-		public String getDescription() {
-			return description;
-		}
-		public void setDescription(String description) {
-			this.description = description;
-		}
-		public void setController(SimulationController controller) {
-			this.controller = controller;
-		}
+
 		
 		public void UpdateControllerTable() {
 
