@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class TurnsHandler {
+public class TurnHandler {
 
 	private int turn;
 	private int populationNumber;
@@ -89,6 +89,7 @@ public class TurnsHandler {
 				numberTurn.add(rs.getString(1));
 				population.add(rs.getString(2));
 			}
+			cn.close();
 		} catch (SQLException e) {
 			System.out.println(e);
 		}
@@ -131,49 +132,50 @@ public class TurnsHandler {
 		String[][] tab = new String[inNumberTurn.size()+1][inPopulation.size()+1];
 		int numberPopulationLength = tab.length;
 		int numberTurnLength = tab[0].length;
-			for (int line = 0; line<numberPopulationLength; line++)
-			{
-			for(int column = 0 ; column<numberTurnLength ; column++)
-			{
-			if(line==0 && column==0)
-			{
-				tab[line][column] = " ";
-			}
-			else if(line==0)
-			{
-				tab[line][column] = inPopulation.get(column-1);
-			}
-			else if(column==0)
-			{
-				tab[line][column] = inNumberTurn.get(line-1);
-			}
-			else
-			{
-		try {
-			Connection cn = DriverManager.getConnection(
-					"jdbc:mysql://localhost/algo?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
-					"root", "root");
-			Statement st = cn.createStatement();
-			ResultSet rs = st.executeQuery("CALL AffPopQu('" + inNumberTurn.get(line-1) +"','"
-			+ inPopulation.get(column-1) +"')");
-			while (rs.next()){
-				tab[line][column] = rs.getString(1);
-			}
-			}
-		 catch (SQLException e) {
-			System.out.println(e);
-		}
-		}
-		}
-		}
-		
 		for (int line = 0; line<numberPopulationLength; line++)
 		{
-		for(int column = 0 ; column<numberTurnLength ; column++)
-		{
-			System.out.print(tab[line][column] + " ");
+			for(int column = 0 ; column<numberTurnLength ; column++)
+			{
+				if(line==0 && column==0)
+				{
+					tab[line][column] = " ";
+				}
+				else if(line==0)
+				{
+					tab[line][column] = inPopulation.get(column-1);
+				}
+				else if(column==0)
+				{
+					tab[line][column] = inNumberTurn.get(line-1);
+				}
+				else
+				{
+					try {
+						Connection cn = DriverManager.getConnection(
+								"jdbc:mysql://localhost/algo?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
+								"root", "root");
+						Statement st = cn.createStatement();
+						ResultSet rs = st.executeQuery("CALL AffPopQu('" + inNumberTurn.get(line-1) +"','"
+								+ inPopulation.get(column-1) +"')");
+						while (rs.next()){
+							tab[line][column] = rs.getString(1);
+						}
+						cn.close();
+					}
+					catch (SQLException e) {
+						System.out.println(e);
+					}
+				}
+			}
 		}
-		System.out.println();
+
+		for (int line = 0; line<numberPopulationLength; line++)
+		{
+			for(int column = 0 ; column<numberTurnLength ; column++)
+			{
+				System.out.print(tab[line][column] + " ");
+			}
+			System.out.println();
 		}
 		return tab;
 	}
@@ -192,6 +194,7 @@ public class TurnsHandler {
 			Statement st = cn.createStatement();
 			st.executeUpdate("CALL insertPopSim ('" + getPopulationNumber() + "','" + getPopulationId() + "','" + getTurn() + "','"
 					+ getSimulationId() + "')");
+			cn.close();
 		} catch (SQLException e) {
 			System.out.println(e);
 		}
@@ -222,6 +225,7 @@ public class TurnsHandler {
 				st.executeUpdate("INSERT INTO `simulationturn`(`turn`, `idSimulation`) VALUES ('" + getTurn() + "','"
 						+ getSimulationId() + "');");
 			}
+			cn.close();
 		} catch (SQLException e) {
 			System.out.println(e);
 			return false;

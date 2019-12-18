@@ -73,6 +73,7 @@ public class SimulationHandler {
 				setSimulationName(rs.getString(1));
 				setDescription(rs.getString(2));
 			}
+			cn.close();
 		} catch (SQLException e) {
 			System.out.println(e);
 		}
@@ -98,6 +99,7 @@ public class SimulationHandler {
 			while (rs.next()) {
 				setSimulationId(rs.getInt(1));
 			}
+			cn.close();
 		} catch (SQLException e) {
 			System.out.println(e);
 		}
@@ -119,6 +121,7 @@ public class SimulationHandler {
 			Statement st = cn.createStatement();
 			st.executeUpdate("INSERT INTO `simulation`(`name`, `description`) VALUES ('" + getSimulationName() + "','"
 					+ getDescription() + "')");
+			cn.close();
 		} catch (SQLException e) {
 			System.out.println(e);
 		}

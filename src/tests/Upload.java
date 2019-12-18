@@ -4,7 +4,7 @@ import sql.PopHandler;
 import sql.PopulationRules;
 import sql.RulesHandler;
 import sql.SimulationHandler;
-import sql.TurnsHandler;
+import sql.TurnHandler;
 
 
 
@@ -12,9 +12,9 @@ public class Upload {
 
 	public Upload() {
 		//uploadregle("regle5", "Une regle peut en cacher une autre");
-		uploadPopulation("choco", "encore une autre population...");
+		uploadPopulation("chocobkb", "encore une autre population...");
 		//uploadpopregle("toto", "regle2");
-		//uploadsim("simu3", "il y a pas que les italiens qui simulent");
+		//uploadSimulation("skjfnakjfna", "il y a pas que les italiens qui simulent");
 		//uploadPopulationTurn(7, "choco", 230, "simu1");
 		//uploadPopulationTurn(0, "tata", 5, "simu1");
 		
@@ -52,7 +52,7 @@ public class Upload {
 	}
 	//permet d'uploader un noouveau tour dans une simulation
 	public void uploadPopulationTurn(int simTurn, String pop, int nbPop, String sim) {
-		TurnsHandler t = new TurnsHandler();
+		TurnHandler t = new TurnHandler();
 		t.uploadPopulationTurn(simTurn, pop, nbPop, sim);
 	}
 }

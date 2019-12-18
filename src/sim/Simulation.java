@@ -33,7 +33,6 @@ public class Simulation
 		this.name = name;
 		this.description = description;
 		this.iteration = 0;
-		
 	}
 	
 	/**
@@ -183,6 +182,7 @@ public class Simulation
 			for(Pop child : childPops) environment.add(child);
 			childPops = new ArrayList<Pop>();
 			for(Pop pop : environment) pop.Ready();
+			
 			if(print) 
 			{
 				System.out.println("Iteration " + iteration + "\n");
@@ -200,13 +200,32 @@ public class Simulation
 		 */
 		public void iterate(int amount, boolean print)
 		{
-			if(print && iteration == 0) 
+			sql.TurnHandler turnHandler = new sql.TurnHandler();
+			if(iteration == 0) 
 			{
-				System.out.println("Iteration " + iteration + "\n");
-				printAllPops();
-				System.out.println();
+				for (Pop pop : getEnvironment()) 
+				{
+					turnHandler.uploadPopulationTurn(iteration, pop.getName(), countPop(pop.getName()), this.getName());
+				}
+				if(print)
+				{
+					System.out.println("Iteration " + iteration + "\n");
+					printAllPops();
+					System.out.println();
+				}
 			}
-			for(int i = 0; i < amount; i++) iterate(print);
+			
+			
+			
+			for(int i = 0; i < amount; i++) 
+			{
+				iterate(print);
+				for (Pop pop : getEnvironment()) 
+				{
+					turnHandler.uploadPopulationTurn(iteration, pop.getName(), countPop(pop.getName()), this.getName());
+				}
+				
+			}
 		}
 
 		

@@ -4,7 +4,7 @@ import sql.PopHandler;
 import sql.PopulationRules;
 import sql.RulesHandler;
 import sql.SimulationHandler;
-import sql.TurnsHandler;
+import sql.TurnHandler;
 
 public class View {
 
@@ -50,7 +50,7 @@ public class View {
 	}
 	
 	public void viewPopulationSimulation(String i) {
-		TurnsHandler t = new TurnsHandler();
+		TurnHandler t = new TurnHandler();
 		t.viewPopulationSimulation(i);
 	}
 }

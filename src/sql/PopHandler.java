@@ -71,6 +71,7 @@ public class PopHandler {
 				setName(rs.getString(1));
 				setDescription(rs.getString(2));
 			}
+			cn.close();
 		} catch (SQLException e) {
 			System.out.println(e);
 		}
@@ -91,13 +92,11 @@ public class PopHandler {
 					"root", "root");
 			Statement st = cn.createStatement();
 			ResultSet rs = st.executeQuery("SELECT idPopulation FROM `population` where name='" + getName() + "'");
-			while (rs.next()) {
-				setPopId(rs.getInt(1));
-			}
+			while (rs.next()) {setPopId(rs.getInt(1));}
+			cn.close();
 		} catch (SQLException e) {
 			System.out.println(e);
 		}
-
 		return getPopId();
 	}
 
@@ -106,7 +105,7 @@ public class PopHandler {
 	 *
 	 * @return String = réussi
 	 */
-	public boolean setPopulation() {
+	private boolean setPopulation() {
 		try {
 			Connection cn = DriverManager.getConnection(
 					"jdbc:mysql://localhost/algo?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
@@ -114,6 +113,7 @@ public class PopHandler {
 			Statement st = cn.createStatement();
 			st.executeUpdate(
 					"INSERT INTO `population`(`name`, `description`) VALUES ('" + getName() + "','" + getDescription() + "')");
+			cn.close();
 		} catch (SQLException e) {
 			System.out.println(e);
 			return false;
@@ -132,7 +132,6 @@ public class PopHandler {
 		setName(name);
 		setDescription(desccription);
 		setPopulation();
-
 	}
 
 	/**

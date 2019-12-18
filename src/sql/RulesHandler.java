@@ -73,6 +73,7 @@ public class RulesHandler {
 				setName(rs.getString(1));
 				setDescription(rs.getString(2));
 			}
+			cn.close();
 		} catch (SQLException e) {
 			System.out.println(e);
 		}
@@ -99,6 +100,7 @@ public class RulesHandler {
 			while (rs.next()) {
 				setRulesId(rs.getInt(1));
 			}
+			cn.close();
 		} catch (SQLException e) {
 			System.out.println(e);
 		}
@@ -119,6 +121,7 @@ public class RulesHandler {
 			Statement st = cn.createStatement();
 			st.executeUpdate(
 					"INSERT INTO `rule`(`name`, `description`) VALUES ('" + getName() + "','" + getDescription() + "')");
+			cn.close();
 		} catch (SQLException e) {
 			System.out.println(e);
 		}

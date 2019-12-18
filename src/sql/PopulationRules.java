@@ -67,6 +67,7 @@ public class PopulationRules {
 				pop = rs.getString(1);
 				regle.add(rs.getString(2));
 			}
+			cn.close();
 		} catch (SQLException e) {
 			System.out.println(e);
 		}
@@ -90,6 +91,7 @@ public class PopulationRules {
 			Statement st = cn.createStatement();
 			st.executeUpdate(
 					"INSERT INTO `lead`(`idRule`, `idPopulation`) VALUES (" + getRuleId() + "," + getPopulationId() + ")");
+			cn.close();
 		} catch (SQLException e) {
 			System.out.println(e);
 		}
