@@ -7,6 +7,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+/**
+* This class enables to put in the database results of each turn of the simulation
+* @author Baptiste
+*/
 public class TurnHandler {
 
 	private int turn;
@@ -14,64 +18,40 @@ public class TurnHandler {
 	private int SimulationId;
 	private int populationId;
 
-	/**
-	 * @return the turn
-	 */
 	public int getTurn() {
 		return turn;
 	}
 
-	/**
-	 * @param turn the turn to set
-	 */
 	public void setTurn(int turn) {
 		this.turn = turn;
 	}
 
-	/**
-	 * @return the idSimu
-	 */
 	public int getSimulationId() {
 		return SimulationId;
 	}
 
-	/**
-	 * @param simulationId the idSimu to set
-	 */
 	public void setSimulationId(int simulationId) {
 		this.SimulationId = simulationId;
 	}
 
-	/**
-	 * @return the nbPop
-	 */
 	public int getPopulationNumber() {
 		return populationNumber;
 	}
 
-	/**
-	 * @param populationNumber the nbPop to set
-	 */
 	public void setPopulationNumber(int populationNumber) {
 		this.populationNumber = populationNumber;
 	}
 
-	/**
-	 * @return the idPop
-	 */
 	public int getPopulationId() {
 		return populationId;
 	}
 
-	/**
-	 * @param populationId the idPop to set
-	 */
 	public void setpopulationId(int populationId) {
 		this.populationId = populationId;
 	}
 
 	/**
-	 * Permet de retourner le nombre de tours et les différentes populations comprise dans la simulation
+	 * This method return a table of turn data 
 	 *
 	 * @return String[][] getRestrictedTurnPopulation(ArrayList<String>, ArrayList<String>)
 	 */
@@ -98,7 +78,7 @@ public class TurnHandler {
 
 	}
 	/**
-	 * Permet de retourner le nombre de tours et les différentes populations comprise dans la simulation
+	 * Permet de retourner le nombre de tours et les diffÃ©rentes populations comprise dans la simulation
 	 * en enlevant les doublons
 	 *
 	 * @return String[][] viewArraySimulation(ArrayList<String> ArrayList<String>)
@@ -123,7 +103,7 @@ public class TurnHandler {
 	}
 
 	/**
-	 * Permet de retourner le tableau général d'une simulation
+	 * Permet de retourner le tableau gÃ©nÃ©ral d'une simulation
 	 *
 	 * @return String[][] tab
 	 */
@@ -181,10 +161,10 @@ public class TurnHandler {
 	}
 
 	/**
-	 * Permet de placer dans la base de donnée un nouveau tour et l'aspect de la
+	 * Permet de placer dans la base de donnÃ©e un nouveau tour et l'aspect de la
 	 * simulation
 	 *
-	 * @return String = réussi
+	 * @return String = rÃ©ussi
 	 */
 	public String setPopulationTurn() {
 		try {
@@ -199,13 +179,13 @@ public class TurnHandler {
 			System.out.println(e);
 		}
 
-		return "réussi";
+		return "rÃ©ussi";
 	}
 
 	/**
-	 * Permet de savoi si un tours existe dans la base de donnée 
+	 * Permet de savoi si un tours existe dans la base de donnÃ©e 
 	 *
-	 * @return String = réussi
+	 * @return String = rÃ©ussi
 	 */
 
 	
@@ -235,10 +215,9 @@ public class TurnHandler {
 	}
 
 	/**
-	 * Permet de placer dans la base de donnée un nouveau tour si il n'existe pas, et d'ajouter une population 
-	 * avec son nombre de popuation
+	 * This method puts in the database data about a turn
 	 *
-	 * @return String = réussi
+	 * @return String = rÃ©ussi
 	 */
 
 	
@@ -260,7 +239,7 @@ public class TurnHandler {
 	/**
 	 * Permet d'afficher un tableau de toute la simuation
 	 *
-	 * @return String = réussi
+	 * @return String = rÃ©ussi
 	 */
 
 
