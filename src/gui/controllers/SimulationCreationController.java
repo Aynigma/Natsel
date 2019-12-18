@@ -108,7 +108,7 @@ public class SimulationCreationController extends Controller {
 						
 						Pop populationModel = simulationPopulationRowModel.getPopulation();
 						
-						Pop population = new Pop(populationModel.getName(), populationModel.getDescription(), populationModel.getSimulation(), populationModel.getFoodType(), 1);
+						Pop population = new Pop(populationModel);
 						for (Rule rule : populationModel.getRules()) {
 							if(rule instanceof Eat){
 								population.addRule(new Eat((Eat)rule));
@@ -124,6 +124,7 @@ public class SimulationCreationController extends Controller {
 						simulation.addPop(population);
 					}
 				}
+
 				Window.getInstance().changeScene(Window.getSceneFromFXML(Window.SCENE_PATH_SIMULATION));
 			}
 		});
@@ -134,7 +135,7 @@ public class SimulationCreationController extends Controller {
 				//save textfields values
 				Window.getInstance().getSimulation().setName       (crea_sim_name.getText());
 				Window.getInstance().getSimulation().setDescription(crea_sim_desc.getText());
-				
+        
 				Window.getInstance().changeScene(Window.getSceneFromFXML(Window.SCENE_PATH_CREATE_POPULATION));
 			}
 		});
@@ -155,20 +156,23 @@ public class SimulationCreationController extends Controller {
 			}
 		});
 		
-		crea_sim_button_pop_delete.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				SimulationPopulationRowModel selectedRow = crea_sim_table_view_pop.getSelectionModel().getSelectedItem();
-				Window.getInstance().getPopulations().remove(selectedRow);
-				System.out.println("/_\\ Deleted pop : "+selectedRow.getName());
-				ObservableList<SimulationPopulationRowModel> observableList = FXCollections.observableArrayList();
-				for (SimulationPopulationRowModel simulationPopulationRowModel : Window.getInstance().getPopulations()) {
-					observableList.add(simulationPopulationRowModel);
-				}
-				crea_sim_table_view_pop.setItems(observableList);
-			}
-		});
+		 crea_sim_button_pop_delete.setOnAction(new EventHandler<ActionEvent>() {
+	            @Override
+	            public void handle(ActionEvent event) {
+	                SimulationPopulationRowModel selectedRow = crea_sim_table_view_pop.getSelectionModel().getSelectedItem();
+	                if(selectedRow != null) {
+	                    Window.getInstance().getPopulations().remove(selectedRow);
+	                    System.out.println("/_\\ Deleted pop : "+selectedRow.getName());
+	                    ObservableList<SimulationPopulationRowModel> observableList = FXCollections.observableArrayList();
+	                    for (SimulationPopulationRowModel simulationPopulationRowModel : Window.getInstance().getPopulations()) {
+	                        observableList.add(simulationPopulationRowModel);
+	                    }
+	                    crea_sim_table_view_pop.setItems(observableList);
+	                }
+	                
+	            }
+	        });
 		
-
 	}
 }
+

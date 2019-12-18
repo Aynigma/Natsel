@@ -19,9 +19,14 @@ import java.util.Collections;
  */
 public class Simulation
 {
-	private String name;
+	private String name;		
+		public String getName() {return name;}
+		public void setName(String name) {this.name = name;}
 	private String description;
+		public String getDescription() {return description;}
+		public void setDescription(String description) {this.description = description;}
 	private SimulationController controller;
+		public void setController(SimulationController controller) {this.controller = controller;}
 	
 	public Simulation(String name, String description)
 	{
@@ -177,6 +182,7 @@ public class Simulation
 			for(Pop child : childPops) environment.add(child);
 			childPops = new ArrayList<Pop>();
 			for(Pop pop : environment) pop.Ready();
+			
 			if(print) 
 			{
 				System.out.println("Iteration " + iteration + "\n");
@@ -194,29 +200,34 @@ public class Simulation
 		 */
 		public void iterate(int amount, boolean print)
 		{
-			if(print) 
+			sql.TurnHandler turnHandler = new sql.TurnHandler();
+			if(iteration == 0) 
 			{
-				System.out.println("Iteration " + iteration + "\n");
-				printAllPops();
-				System.out.println();
+				for (Pop pop : getEnvironment()) 
+				{
+					turnHandler.uploadPopulationTurn(iteration, pop.getName(), countPop(pop.getName()), this.getName());
+				}
+				if(print)
+				{
+					System.out.println("Iteration " + iteration + "\n");
+					printAllPops();
+					System.out.println();
+				}
 			}
-			for(int i = 0; i < amount; i++) iterate(print);
+			
+			
+			
+			for(int i = 0; i < amount; i++) 
+			{
+				iterate(print);
+				for (Pop pop : getEnvironment()) 
+				{
+					turnHandler.uploadPopulationTurn(iteration, pop.getName(), countPop(pop.getName()), this.getName());
+				}
+				
+			}
 		}
-		public String getName() {
-			return name;
-		}
-		public void setName(String name) {
-			this.name = name;
-		}
-		public String getDescription() {
-			return description;
-		}
-		public void setDescription(String description) {
-			this.description = description;
-		}
-		public void setController(SimulationController controller) {
-			this.controller = controller;
-		}
+
 		
 		public void UpdateControllerTable() {
 
@@ -232,3 +243,4 @@ public class Simulation
 		}
 		
 }
+

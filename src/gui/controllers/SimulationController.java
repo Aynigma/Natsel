@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import exporters.CSVExporter;
 import gui.Window;
+import gui.models.SimulationPopulationRowModel;
 import gui.models.TurnDataRowModel;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
@@ -26,6 +27,7 @@ import javafx.scene.control.TextFormatter;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import sim.Pop;
 import sim.Simulation;
 /**
  * This class handle the Simulation Scene and inherit from the Controller class
@@ -62,7 +64,18 @@ public class SimulationController extends Controller {
 	
 	public SimulationController() {
 		super();
-		this.simulation = Window.getInstance().getSimulation();
+        this.simulation = Window.getInstance().getSimulation();
+        
+        sql.SimulationHandler simHandler = new sql.SimulationHandler();
+		simHandler.uploadSimulation(this.simulation.getName(), this.simulation.getDescription());
+		
+		sql.PopHandler popHandler = new sql.PopHandler();
+		for (SimulationPopulationRowModel turnDataRowModel : Window.getInstance().getPopulations()) 
+		{
+            Pop pop = turnDataRowModel.getPopulation();
+            popHandler.uploadPopulation(pop.getName(), pop.getDescription());
+        }
+		
 		simulation.setController(this);
 	}
 	
