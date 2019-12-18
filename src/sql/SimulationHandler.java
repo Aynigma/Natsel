@@ -3,8 +3,7 @@ package sql;
 import java.sql.*;
 
 /**
- * Classe gèrant l'esemble des appels de la base de donnée liée aux simulations
- *
+ * This class handles exchanges between database and the simulation
  * @author Baptiste
  */
 
@@ -13,52 +12,34 @@ public class SimulationHandler {
 	private String simulationName;
 	private String description;
 
-	/**
-	 * @return the id_sim : Int
-	 */
 	public int getSimulationId() {
 		return simulationId;
 	}
 
-	/**
-	 * @param SimulationId : Int the id_sim to set
-	 */
 	public void setSimulationId(int SimulationId) {
 		this.simulationId = SimulationId;
 	}
 
-	/**
-	 * @return the nomsim : String
-	 */
 	public String getSimulationName() {
 		return simulationName;
 	}
 
-	/**
-	 * @param simulationName : String the nomsim to set
-	 */
 	public void setSimulationName(String simulationName) {
 		this.simulationName = simulationName;
 	}
 
-	/**
-	 * @return the description : String
-	 */
 	public String getDescription() {
 		return description;
 	}
-
-	/**
-	 * @param description : String the description to set
-	 */
+	
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
 	/**
-	 * Permet de retourner le nom et la description avec l'id de la simulation
+	 * This method return name and description of the simulation through it's id
 	 *
-	 * @return Arraylist String
+	 * @return simulation name and description : String
 	 */
 	public String viewSimulation() {
 
@@ -84,9 +65,9 @@ public class SimulationHandler {
 	}
 
 	/**
-	 * Permet de retrourner l'id de la simulation grâce à son nom
+	 * This method return id of the simulation through it's name
 	 *
-	 * @return Int id
+	 * @return id : int
 	 */
 
 	public int viewSimulationId() {
@@ -108,9 +89,9 @@ public class SimulationHandler {
 	}
 
 	/**
-	 * Permet de placer dans la base de donnée une nouvelle simulation
+	 * This method put in the database this simulation
 	 *
-	 * @return String = réussi
+	 * @return "rÃ©ussi" : String
 	 */
 
 	public String setSimulation() {
@@ -126,14 +107,14 @@ public class SimulationHandler {
 			System.out.println(e);
 		}
 
-		return "réussi";
+		return "rÃ©ussi";
 	}
 
 	/**
-	 * Permet de placer dans la base de donnée une nouvelle simulation
+	 * This method put in the database a simulation
 	 *
-	 * @param String nom
-	 * @param Int    Description
+	 * @param simulationName : String
+	 * @param desccription : String
 	 */
 
 	public void uploadSimulation(String simulationName, String desccription) {
@@ -143,9 +124,8 @@ public class SimulationHandler {
 	}
 
 	/**
-	 * Permet d'afficher le resulatat de la recherche avec l'id passer en paramètre
-	 *
-	 * @param Int id
+	 * This method prints results of found simulation through it's id
+	 * @param simulationId : int
 	 */
 
 	public void viewSimulation(int simulationId) {
@@ -155,10 +135,8 @@ public class SimulationHandler {
 	}
 
 	/**
-	 * Permet d'afficher le resulatat de la recherche avec le nom passer en
-	 * paramètre
-	 *
-	 * @param String nom
+	 * This method prints results of found simulation through it's name
+	 * @param name : String
 	 */
 
 	public int viewSimulationId(String name) {
