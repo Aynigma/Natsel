@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import sim.Simulation;
 
+ 
 // fxml version attributes : xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
 
 /**
@@ -72,20 +73,17 @@ public class Window extends Application{
 		System.out.println("Initialising Window...");
 		stage.setTitle("NatSel");
 
-    //end program on exit
-    stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-        @Override
-        public void handle(WindowEvent e) {
-
-           quitApp();
-
-        }
-     });
+        //end program on exit
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent e) {
+               quitApp();
+            }
+         });
 	
-    changeScene(getSceneFromFXML(initialScene)); 
-    stage.show();
-
-    System.out.println("Window Initialised\n");
+        changeScene(getSceneFromFXML(initialScene)); 
+        stage.show();
+        System.out.println("Window Initialised\n");
 	}
 	
 	public static Scene getSceneFromFXML(String path) {
@@ -108,6 +106,7 @@ public class Window extends Application{
 		}else {
 			System.out.println("!-Can't change to a null Scene");
 		}
+		
 	}
 	
 	public void quitApp() {
@@ -120,4 +119,9 @@ public class Window extends Application{
 		this.simulation = new Simulation("Untitled Simulation", "No description available...");
 		this.populations = new ArrayList<SimulationPopulationRowModel>();
 	}
+
+	public Stage getStage() {
+		return stage;
+	}
+	
 }

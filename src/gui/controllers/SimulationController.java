@@ -1,8 +1,10 @@
 package gui.controllers;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import exporters.CSVExporter;
 import gui.Window;
 import gui.models.SimulationPopulationRowModel;
 import gui.models.TurnDataRowModel;
@@ -16,14 +18,17 @@ import javafx.fxml.FXML;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import sim.Pop;
 import sim.Simulation;
-
 /**
  * This class handle the Simulation Scene and inherit from the Controller class
  * @author Aynigma
@@ -31,6 +36,8 @@ import sim.Simulation;
  */
 public class SimulationController extends Controller {
 
+	@FXML
+	private MenuItem menu_export_csv;
     @FXML
     private TableView<TurnDataRowModel> turn_table_view;
     @FXML
@@ -44,22 +51,22 @@ public class SimulationController extends Controller {
 	
     private Simulation simulation;
     
-    private ObservableList<TurnDataRowModel> observableList;
+    private ObservableList<TurnDataRowModel> turnData;
     
     /**
      * This method allows to add a row in the table about populations quantities per turn.
      * @param row
      */
     public void addRow(TurnDataRowModel row) {
-    	observableList.add(row);
-    	turn_table_view.setItems(observableList);
+    	turnData.add(row);
+    	turn_table_view.setItems(turnData);
     }
 	
 	public SimulationController() {
 		super();
-		this.simulation = Window.getInstance().getSimulation();
-		
-		sql.SimulationHandler simHandler = new sql.SimulationHandler();
+        this.simulation = Window.getInstance().getSimulation();
+        
+        sql.SimulationHandler simHandler = new sql.SimulationHandler();
 		simHandler.uploadSimulation(this.simulation.getName(), this.simulation.getDescription());
 		
 		sql.PopHandler popHandler = new sql.PopHandler();
@@ -81,10 +88,6 @@ public class SimulationController extends Controller {
 		super.initialize(location, resources);
 		
 		turn_table_col_turn.setCellValueFactory(new PropertyValueFactory<>("turn"));
-	
-		
-		ObservableList<TurnDataRowModel> data = FXCollections.observableArrayList();
-		
 		
 		TableView<TurnDataRowModel> table = turn_table_view;
 
@@ -97,11 +100,8 @@ public class SimulationController extends Controller {
             table.getColumns().add(tc);
 		}
 		
-		table.setItems(data);
-		//simulation.UpdateControllerTable();
 		
-		
-		observableList = FXCollections.observableArrayList();
+		turnData = FXCollections.observableArrayList();
 		
 		
 		turn_doTurn_button.setOnAction(new EventHandler<ActionEvent>() {
@@ -138,6 +138,41 @@ public class SimulationController extends Controller {
 		
 		
 		turn_label.setText(""+simulation.iteration);
+		
+		menu_export_csv.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+				FileChooser fileChooser = new FileChooser();
+				fileChooser.setInitialFileName("NatSel - "+simulation.getName());
+				
+				ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
+	            fileChooser.getExtensionFilters().add(extFilter);
+				fileChooser.setSelectedExtensionFilter(extFilter);
+				
+				File selectedFile = fileChooser.showSaveDialog(Window.getInstance().getStage());
+				System.out.println("--- Trying to save data at : "+selectedFile);
+				if(selectedFile != null) {
+					
+					String[] populationsNames = new String[Window.getInstance().getPopulations().size()];
+					for (int i = 0; i < populationsNames.length; i++) {
+						populationsNames[i] = Window.getInstance().getPopulations().get(i).getName();
+					}
+
+					
+					TurnDataRowModel[] populationQuantities = new TurnDataRowModel[turnData.size()];
+					for (int i = 0; i < populationQuantities.length; i++) {
+						populationQuantities[i] = turnData.get(i);
+					}
+					
+					CSVExporter csvExporter = new CSVExporter(populationsNames, populationQuantities);
+					
+					boolean saveSucces = csvExporter.export(selectedFile.getAbsolutePath());
+					System.out.println(saveSucces ? "-- File succesfully saved" : "/_\\ Save failed");
+				}
+				
+			}
+		});
 		
 		
     }

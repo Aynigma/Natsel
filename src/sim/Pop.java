@@ -93,5 +93,4 @@ public class Pop
 		if(rules.get(step).behave()) step++;
 		if(rules.size() <= step) Done();
 	}
-
 }

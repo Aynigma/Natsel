@@ -77,4 +77,3 @@ public class Eat extends Rule
 		return maxEaten;
 	}
 }
-

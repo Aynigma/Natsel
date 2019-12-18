@@ -42,4 +42,3 @@ public class NeedFood extends Rule
 	}
 }
 
-
