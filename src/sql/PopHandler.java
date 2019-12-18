@@ -3,7 +3,7 @@ package sql;
 import java.sql.*;
 
 /**
- * Classe gèrant l'esemble des appels de la base de donnée liée a la population
+ * This class enable interraction between population and their representation in the database
  *
  * @author Baptiste
  */
@@ -13,51 +13,32 @@ public class PopHandler {
 	private String name;
 	private String description;
 
-	/** ;
-	 * @return the id_pop : int
-	 */
 	public int getPopId() {
 		return popId;
 	}
 
-	/**
-	 * @return the nom : String
-	 */
 	public String getName() {return name;}
 
-	/**
-	 * @param name : String the nom to set
-	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	/**
-	 * @return the description : String
-	 */
 	public String getDescription() {
 		return description;
 	}
 
-	/**
-	 * @param description : int the nbpop to set
-	 */
 	public void setDescription(String desccription) {
 		this.description = desccription;
 	}
 
-	/**
-	 * @param popId : int the id_pop to set
-	 */
 	public void setPopId(int popId) {
 		this.popId = popId;
 	}
 
 	/**
-	 * Permet de retourner le nom et le nombre de population avec le nom de l'id de
-	 * la population
+	 * This method return population name and description as they are in the DataBase for this pop id
 	 *
-	 * @return Arraylist String
+	 * @return name + description : String
 	 */
 	public String viewPopulation() {
 		try {
@@ -81,9 +62,9 @@ public class PopHandler {
 	}
 
 	/**
-	 * Permet de retrourner l'id de la population grâce à son nom
+	 * This method enables to recover population id through this population name
 	 *
-	 * @return Int id
+	 * @return popId : int
 	 */
 	public int viewPopulationId() {
 		try {
@@ -101,9 +82,9 @@ public class PopHandler {
 	}
 
 	/**
-	 * Permet de placer dans la base de donnée une nouvelle population
+	 * This method tries to put this population in the database.
 	 *
-	 * @return String = réussi
+	 * @return success : boolles
 	 */
 	private boolean setPopulation() {
 		try {
@@ -123,10 +104,10 @@ public class PopHandler {
 	}
 
 	/**
-	 * Permet de placer dans la base de donnée une nouvelle population
+	 * This method tries to put a population in the database
 	 *
-	 * @param String nom
-	 * @param String Desc
+	 * @param name : String
+	 * @param desccription : String
 	 */
 	public void uploadPopulation(String name, String desccription) {
 		setName(name);
@@ -135,9 +116,9 @@ public class PopHandler {
 	}
 
 	/**
-	 * Permet d'afficher le resulatat de la recherche avec l'id passer en paramètre
+	 * This method prints the results of population search through it's id
 	 *
-	 * @param Int id
+	 * @param populationId : int
 	 */
 	public void viewPopulation(int populationId) {
 		setPopId(populationId);
@@ -146,10 +127,9 @@ public class PopHandler {
 	}
 
 	/**
-	 * Permet d'afficher le resulatat de la recherche avec le nom passer en
-	 * paramètre
+	 * This method prints the results of population search through it's name
 	 *
-	 * @param String nom
+	 * @param name : String
 	 */
 	public int viewPopulationId(String name) {
 		setName(name);
